@@ -1,0 +1,30 @@
+{
+  "allow_ai_self_track": {
+    "title": "允许大模型自主增减追踪规则",
+    "description": "是否允许大模型自主调用 track_target / untrack_target 工具动态添加或取消对特定词语和用户的追踪",
+    "type": "bool",
+    "default": true,
+    "hint": "开启后 AI 可在对话中根据需要自主决定关注谁或关注什么词"
+  },
+  "enable_silence_keyword": {
+    "title": "启用 [SILENCE] 静默回复机制",
+    "description": "当 AI 因追踪规则被唤醒后，若输出 [SILENCE] 是否拦截并清空回复，实现 0 扰民围观",
+    "type": "bool",
+    "default": true,
+    "hint": "推荐开启，赋予 AI 自主决定说话还是沉默的权利"
+  },
+  "admin_only_command": {
+    "title": "指令仅管理员可用",
+    "description": "是否仅允许管理员使用 /track 和 /untrack 聊天指令",
+    "type": "bool",
+    "default": false,
+    "hint": "若关闭则群内普通成员也可使用指令（AI 工具调用不受此限制）"
+  },
+  "default_scope": {
+    "title": "默认追踪生效范围",
+    "description": "通过指令或未明确指定范围时默认的作用域",
+    "type": "string",
+    "default": "group",
+    "hint": "group (仅当前群生效) 或 global (全局生效)"
+  }
+}

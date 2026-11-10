@@ -1,0 +1,43 @@
+name: astrbot_plugin_extra_wake_tracker
+display_name: 动态额外唤醒词与关注用户发言追踪插件
+desc: >-
+  AstrBot 动态额外唤醒词与关注用户发言追踪插件。
+  支持动态增减额外唤醒词与关注追踪特定用户，严格保护系统基础配置自带的唤醒词不被误删；
+  被追踪的用户一发言或额外唤醒词被触发即刻唤醒 AI；
+  全面赋能大模型自主决策，提供 track_target、untrack_target、list_tracked_targets 工具，唤醒后 AI 可根据语境自主选择发言插话或回复 [SILENCE] 保持静默围观（0 扰民）；
+  提供 /track 与 /untrack 聊天指令组，支持群组隔离与全局模式。
+short_desc: 动态增减额外唤醒词，关注追踪用户发言唤醒 AI，支持大模型自决发言或保持静默
+help: >-
+  【指令用法】
+  1. 额外唤醒词管理：
+     /track word <关键词> [原因] - 添加额外唤醒词，群友提及该词即刻唤醒 AI；
+     /untrack word <关键词> - 移除额外唤醒词（系统基础配置自带唤醒词受保护不可删除）。
+  2. 关注用户追踪管理：
+     /track user <QQ号或@用户> [原因] - 追踪指定用户，该用户发言无需唤醒词直接唤醒 AI；
+     /untrack user <QQ号或@用户> - 取消对该用户的追踪。
+  3. 清单查看：
+     /track list - 查看当前已激活的所有额外唤醒词、关注用户及受保护的系统唤醒词。
+  【大模型工具契约 (LLM Tools)】
+  1. track_target(target_type='word'|'user', target_value='...', reason='...'): AI 自主建立追踪规则；
+  2. untrack_target(target_type='word'|'user', target_value='...'): AI 自主注销追踪规则（系统自带唤醒词受保护无法删除）；
+  3. list_tracked_targets(): AI 自主查看当前所有激活的追踪规则。
+  【静默决策机制】
+  被追踪规则唤醒后，AI 研判语境若认为无需打扰群聊，只需回复 [SILENCE]，插件将拦截消息跳过发送，实现完全静默。
+version: "1.0.0"
+author: "zjj1280637679-ship-it"
+repo: "https://github.com/zjj1280637679-ship-it/astrbot_plugin_extra_wake_tracker"
+astrbot_version: ">=4.16,<5"
+support_platforms:
+  - aiocqhttp
+  - qq_official
+  - telegram
+  - discord
+  - lark
+  - wechat
+tags:
+  - 唤醒词
+  - 用户追踪
+  - 主动感知
+  - 静默决策
+  - LLM工具
+  - 聊天增强
