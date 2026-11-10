@@ -9,10 +9,12 @@ from PIL import Image
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ASTRBOT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..", "..", ".."))
 
+if CURRENT_DIR in sys.path:
+    sys.path.remove(CURRENT_DIR)
+sys.path.insert(0, CURRENT_DIR)
+
 if ASTRBOT_DIR not in sys.path:
-    sys.path.insert(0, ASTRBOT_DIR)
-if CURRENT_DIR not in sys.path:
-    sys.path.insert(0, CURRENT_DIR)
+    sys.path.append(ASTRBOT_DIR)
 
 from astrbot.core.star.updater import _PluginUpdater
 from astrbot.api.all import AstrBotConfig, MessageChain, Plain, At
