@@ -109,7 +109,7 @@ class TrackerAuditTestSuite(unittest.TestCase):
         self.assertIsNotNone(res)
         meta = res.get("metadata", {})
         self.assertEqual(meta.get("name"), "astrbot_plugin_extra_wake_tracker")
-        self.assertEqual(meta.get("version"), "1.0.0")
+        self.assertEqual(meta.get("version"), "1.1.0")
         self.assertEqual(meta.get("author"), "zjj1280637679-ship-it")
         print("  [PASS] 1.1 官方 _PluginUpdater 规范校验通过 (0 Error)")
 

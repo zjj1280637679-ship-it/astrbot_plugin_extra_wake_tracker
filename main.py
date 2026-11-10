@@ -166,14 +166,23 @@ class ExtraWakeTrackerPlugin(Star):
         reason: str = "",
         is_global: bool = True,
     ) -> str:
-        """添加追踪目标（关注词语或关注用户QQ号）。
-        当被追踪的词语在群聊中被提及，或者被追踪的用户一发言，机器人都会被直接唤醒。
-        大模型被唤醒后可以研判语境，自主选择发言插话，或者回复 '[SILENCE]' 保持静默围观。
+        """【工具是什么】
+        动态唤醒追踪规则添加工具。
+
+        【功能】
+        注册新的消息唤醒关键词或重点追踪用户 QQ 号。当目标词语在聊天中出现或目标用户发言时，触发消息唤醒。
+
+        【返回状态】
+        操作成功提示（包含规则类型、目标值、作用域及备注）；若规则受保护或已禁用则返回错误/拦截说明。
+
+        【最小例子】
+        track_target(target_type="word", target_value="显卡")
+        track_target(target_type="user", target_value="12345678", is_global=False)
 
         Args:
-            target_type(string): 追踪类型，必须为 'word' (词语) 或 'user' (用户QQ号)
-            target_value(string): 要追踪的词语（如 '显卡', '求助'）或用户 QQ 号（如 '12345678'）
-            reason(string): 可选，追踪原因或意图备注（例如 '关注显卡行情', '关注群主指示'）
+            target_type(string): 追踪类型，'word' (关键词) 或 'user' (用户QQ号)
+            target_value(string): 要追踪的词语（如 '显卡'）或用户 QQ 号（如 '12345678'）
+            reason(string): 可选，追踪原因或意图备注
             is_global(boolean): 可选，是否全局生效（True 为所有群聊和私聊，False 仅限当前群，默认 True）
         """
         if not self.allow_ai_self_track:
@@ -222,11 +231,21 @@ class ExtraWakeTrackerPlugin(Star):
         target_type: str,
         target_value: str,
     ) -> str:
-        """取消对特定词语或用户 QQ 号的追踪。
-        注意：严禁且无法删除系统基础配置中原生自带的核心唤醒词（如 '/'）。
+        """【工具是什么】
+        动态唤醒追踪规则移除工具。
+
+        【功能】
+        移除已注册的额外唤醒词或重点关注用户 QQ 号。系统核心原生唤醒词受保护不可移除。
+
+        【返回状态】
+        移除成功提示；若目标未找到或属于受保护原生唤醒词则返回失败或拦截说明。
+
+        【最小例子】
+        untrack_target(target_type="word", target_value="显卡")
+        untrack_target(target_type="user", target_value="12345678")
 
         Args:
-            target_type(string): 追踪类型，必须为 'word' (词语) 或 'user' (用户QQ号)
+            target_type(string): 追踪类型，'word' (关键词) 或 'user' (用户QQ号)
             target_value(string): 要取消追踪的词语或用户 QQ 号
         """
         if not self.allow_ai_self_track:
@@ -257,8 +276,17 @@ class ExtraWakeTrackerPlugin(Star):
         self,
         event: AstrMessageEvent,
     ) -> str:
-        """
-        查看当前处于激活状态的所有额外唤醒词、被追踪用户名单以及受保护的系统原生唤醒词。
+        """【工具是什么】
+        当前活跃追踪与唤醒规则清单查询工具。
+
+        【功能】
+        查询当前生效的所有额外唤醒词、重点关注用户 QQ 号及受保护的原生系统唤醒词。
+
+        【返回状态】
+        包含额外唤醒词列表、关注用户名单及原生唤醒词的结构化文本清单。
+
+        【最小例子】
+        list_tracked_targets()
         """
         group_id = str(event.get_group_id() or "").strip()
         data = self.store.list_all(group_id=group_id if group_id else None)
@@ -271,8 +299,7 @@ class ExtraWakeTrackerPlugin(Star):
             f"【当前追踪与唤醒清单】\n"
             f"1. 额外唤醒词 ({len(data['extra_words'])} 个): {words_desc}\n"
             f"2. 关注用户 ({len(data['tracked_users'])} 位): {users_desc}\n"
-            f"3. 保护的原生系统唤醒词: {base_desc}\n"
-            f"(提示：被追踪目标触发后，若大模型判断无需打扰群聊，可回复 [SILENCE] 保持静默)"
+            f"3. 保护的原生系统唤醒词: {base_desc}"
         )
 
     # =========================================================================

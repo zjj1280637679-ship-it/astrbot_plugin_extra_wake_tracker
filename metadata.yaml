@@ -23,7 +23,7 @@ help: >-
   3. list_tracked_targets(): AI 自主查看当前所有激活的追踪规则。
   【静默决策机制】
   被追踪规则唤醒后，AI 研判语境若认为无需打扰群聊，只需回复 [SILENCE]，插件将拦截消息跳过发送，实现完全静默。
-version: "1.0.0"
+version: "1.1.0"
 author: "zjj1280637679-ship-it"
 repo: "https://github.com/zjj1280637679-ship-it/astrbot_plugin_extra_wake_tracker"
 astrbot_version: ">=4.16,<5"
